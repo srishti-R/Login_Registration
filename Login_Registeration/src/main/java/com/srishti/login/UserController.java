@@ -1,5 +1,7 @@
 package com.srishti.login;
 
+import java.util.Optional;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +19,10 @@ public class UserController {
 	
 	 @PostMapping("/register")
 	  UserEntity registerUser(@RequestBody UserEntity newUser) {
-	    return repo.save(newUser);
+		 if(!checkIfUserRegistered(newUser)) 
+			 throw new UserAlreadyExistException();
+		 else 
+			 return repo.save(newUser);
 	  }
 	 
 	 @GetMapping("/login/{username}")
@@ -25,6 +30,9 @@ public class UserController {
 		 return repo.findUserentityByUsername(username).orElseThrow(() -> new UserDoesNotExistException(username));
 	 }
 	 
-	 
+	 boolean checkIfUserRegistered(UserEntity user) {
+		Optional<UserEntity> registeredUser= repo.findUserentityByUsername(user.username);
+		return registeredUser.isEmpty();
+	 }
 	 
 }

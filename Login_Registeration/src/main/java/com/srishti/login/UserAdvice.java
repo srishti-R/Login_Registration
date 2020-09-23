@@ -11,8 +11,15 @@ public class UserAdvice {
 
 	@ResponseBody
 	  @ExceptionHandler(UserDoesNotExistException.class)
-	  @ResponseStatus(HttpStatus.NOT_FOUND)
+	  @ResponseStatus(HttpStatus.IM_USED)
 	  String employeeNotFoundHandler(UserDoesNotExistException ex) {
 	    return ex.getMessage();
 	  }
+	
+	@ResponseBody
+	@ExceptionHandler(UserAlreadyExistException.class)
+	@ResponseStatus(HttpStatus.ALREADY_REPORTED)
+	String employeeAlreadyFoundHandler(UserAlreadyExistException ex) {
+		return ex.getMessage();
+	}
 }

@@ -3,15 +3,17 @@ package com.srishti.login;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class UserEntity {
 
-	@GeneratedValue @Id
+	@GeneratedValue
+	@Id
 	Long id;
 	String username;
 	String password;
-	
+ 
 	public UserEntity() {}
 	
 	
@@ -21,6 +23,8 @@ public class UserEntity {
 		this.username = username;
 		this.password = password;
 	}
+	
+	
 
 	public Long getId() {
 		return id;
